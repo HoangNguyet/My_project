@@ -32,7 +32,25 @@ for x in range (0, len(myList)):
     myPicList = os.listdir(path + "/" + str(count)) # lấy danh sách các ảnh trong từng thư mục qua mỗi vòng lặp
     #duyệt qua từng ảnh trong danh sách MypicList
     for y in myList:
-        curImg = cv2.imread(path + "/" + str(count) + "/" + y)
-        print("CurImg: ", curImg)
-        break
-    break
+        curImg = cv2.imread(path + "/" + str(count) + "/" + y) #y là tên file ảnh
+        #print("CurImg: ", curImg)
+        images.append(curImg)
+        classNo.append(count)
+    print(count, end="")
+    count += 1
+
+images = np.array(images)
+classNo = np.array(classNo)
+X_train, X_test, y_train, y_test = train_test_split(images, classNo, test_size=testRatio)
+X_train, X_validation, y_train, y_validation = train_test_split(X_train, y_train, classNo, test_size=validationRatio)
+
+print("Data Shapes")
+print("Train",end = "");print(X_train.shape,y_train.shape)
+print("Validation",end = "");print(X_validation.shape,y_validation.shape)
+print("Test",end = "");print(X_test.shape,y_test.shape)
+
+data = pd.read_csv(label_file)
+print("data shapes", data.shape, type(data))
+
+
+        
